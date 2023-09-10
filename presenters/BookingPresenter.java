@@ -35,4 +35,10 @@ public class BookingPresenter implements ViewObserver {
         updateReservationResultUI(reservationNo);
     }
 
+    @Override
+    public int onChangeReservationTable(int oldReservation, Date reservationDate, int tableNo, String name) {
+        return tableModel.changeReservationTable(oldReservation, reservationDate, tableNo, name);
+    }
+
+
 }

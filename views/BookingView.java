@@ -34,7 +34,13 @@ public class BookingView implements View {
         observer.onReservationTable(orderDate, tableNo, name);
     }
     
-    public void changeReservationTable(int oldReservation, Date reservationDate, int tableNo, String name){
-        //TODO: Реализовать самостоятельно в рамках домашней работы
+    public void changeReservationTable(int oldReservation, Date reservationDate, int tableNo, String name) {
+        int updatedReservationId = observer.onChangeReservationTable(oldReservation, reservationDate, tableNo, name);
+        if (updatedReservationId > 0) {
+            System.out.println("Бронирование успешно изменено. Новый номер брони: #" + updatedReservationId);
+        } else {
+            System.out.println("Не удалось изменить бронирование. Проверьте данные и повторите попытку.");
+        }
     }
+    
 }

@@ -11,10 +11,6 @@ public class TableModel implements Model {
 
     private Collection<Table> tables;
 
-    /**
-     * Получить список всех столиков
-     * @return коллекция столиков
-     */
     public Collection<Table> loadTables(){
 
         if (tables == null){
@@ -31,13 +27,6 @@ public class TableModel implements Model {
     }
 
 
-    /**
-     * Бронирование столика
-     * @param reservationDate дата
-     * @param tableNo номер столика
-     * @param name имя клиента
-     * @return номер брони
-     */
     public int reservationTable(Date reservationDate, int tableNo, String name){
         for (Table table : loadTables()) {
             if (table.getNo() == tableNo){
@@ -50,17 +39,23 @@ public class TableModel implements Model {
         //throw new RuntimeException("Некорректный номер столика");
     }
 
-    /**
-     * TODO: Разработать самостоятельно
-     * Поменять бронь столика
-     * @param oldReservation номер старого резерва (для снятия)
-     * @param reservationDate дата резерва столика
-     * @param tableNo номер столика
-     * @param name Имя
-     */
-    public int changeReservationTable(int oldReservation, Date reservationDate, int tableNo, String name){
-        return  -1;
+    public int changeReservationTable(int oldReservation, Date reservationDate, int tableNo, String name) {
+        for (Table table : tables) {
+            if (table.getNo() == tableNo) {
+                for (Reservation reservation : table.getReservations()) {
+                    if (reservation.getId() == oldReservation) {
+                        reservation.setDate(reservationDate);
+                        reservation.setName(name);
+                        return reservation.getId();
+                    }
+                }
+                System.out.println("Бронирование с номером #" + oldReservation + " не найдено для столика #" + tableNo);
+                return -1;
+            }
+        }
+        System.out.println("Столик #" + tableNo + " не найден");
+        return -1; // В случае, если бронирование не найдено
     }
-
+    
 
 }
